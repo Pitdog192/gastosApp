@@ -3,6 +3,7 @@ import path from 'path'
 import cors from 'cors'
 import gastosRouter from './src/routes/gastosRouter.js'
 import DBconnection from './src/database/databaseConnection.js'
+import config from './src/config/config.js'
 import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -29,4 +30,4 @@ app.get('/data', (req, res) => {
     res.json(users)
 })
 
-app.listen(3333, () => {console.log(`Server on port 3333`)})
+app.listen(config.port, () => {console.log(`Server on port 3333`)})
