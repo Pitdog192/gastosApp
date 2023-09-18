@@ -16,18 +16,12 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 //Database Connection
 DBconnection();
-
 //Routers
 app.use('/gastos', gastosRouter)
 
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-})
-
-app.get('/data', (req, res) => {
-    const users = {usuarios: ["usuario1", "usuario2", "usuario3"]}
-    res.json(users)
 })
 
 app.listen(config.port, () => {console.log(`Server on port 3333`)})

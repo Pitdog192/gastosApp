@@ -1,69 +1,89 @@
 import GastoModel from '../models/gastosModel.js'
 
+//METE TODOS LOS GASTOS EN UN ARRAY TEMPORAL Y FILTRA EL QUE SE ESTÁ BUSCANDO POR ID
+const getGasto = async (id) => {
+    const gastosTemp = []
+    const gastosQuery = await GastoModel.find({}).lean()
+    let gasto;
+    gastosQuery.forEach(el => gastosTemp.push(el))
+    for (let i = 0; i < gastosTemp.length; i++) {
+        if(id === gastosTemp[i]._id.toString()){
+            gasto = gastosTemp[i]
+        }
+    }
+    return gasto
+}
+
 //GET FUNCTION
 async function getGastos(req, res){
-    //METE TODOS LOS GASTOS EN UN ARRAY TEMPORAL Y FILTRA EL QUE SE ESTÁ BUSCANDO POR ID
-    const getGasto = async (id) => {
-        const gastosTemp = []
-        const gastosQuery = await GastoModel.find({}).lean()
-        let gasto;
-        gastosQuery.forEach(el => gastosTemp.push(el))
-        for (let i = 0; i < gastosTemp.length; i++) {
-            if(id === gastosTemp[i]._id.toString()){
-                gasto = gastosTemp[i]
-            }
-        }
-        return gasto
-    }
-    //----------------------
-    let id = req.params.id //
+    let id = req.params.id
     if(req.params.id){
         let queryResp = await getGasto(id)
         try{
             (queryResp) ? res.json({queryResp}) : res.json({mensaje: "Gasto no encontrado"})
         } catch(err){
-            console.log(err)
+            console.error(err)
         }
     } else {
         const gastos = await GastoModel.find({}).lean()
         res.json({gastos})
     }
-}
+}//---------------------------
 
 //CREATE FUNCTION
 async function createGasto(req, res){
-    console.log(req.body)
-    let data = req.body
-    const creation = new GastoModel({data})
-    await creation.validate();
-    res.json({mensaje: "Ruta createGasto"})
-}
+    const newGasto = new GastoModel({
+        gasto: req.body.gasto,
+        tipo: req.body.tipo,
+        importe: req.body.importe,
+        createdAt: req.body.createdAt
+    })
+    try{
+        await GastoModel.create(newGasto);
+        res.json({mensaje: "Ruta createGasto"})
+    } catch(err){
+        console.error(err)
+    }
+}//------------------------------
+
 
 //UPDATE FUNCTION
 async function updateGasto(req, res){
     let id = req.params.id
-    try{
-        const gasto = await GastoModel.find({_id: id}).lean();
-        console.log(gasto)
-        //modificarlo con la propiedad necesaria
-        gasto.tipo = "Asado"
-        await gasto.save()
-        res.json({mensaje: "Gasto actualizado", actualizado: gasto})
+    if(req.params.id){
+        let queryResp = await getGasto(id)
+        if(queryResp){
+            try{
+                const gasto = await GastoModel.findOneAndUpdate({_id : queryResp._id.toString()}, req.body, {new: true});
+                res.json({mensaje: "Gasto actualizado", update: gasto})
+            }catch(err){
+                console.error(err)
+            }
+        } else {
+            res.json({mensaje: `Gasto no encontrado con ID: ${id}`})
+        }
     }
-    catch(err){
-        console.log(err)
-    }
-}
+}//---------------------------------
+
+
 
 //DELETE FUNCTION
 async function deleteGasto(req, res){
-    try{
-        res.json({mensaje: "Ruta deleteGasto"})
+    let id = req.params.id
+    if(req.params.id){
+        let queryResp = await getGasto(id)
+        if(queryResp){
+            try{
+                const gasto = await GastoModel.findOneAndUpdate({_id : queryResp._id.toString()}, {muestra: false}, {new: true});
+                res.json({mensaje: "Gasto eliminado", update: gasto})
+            }catch(err){
+                console.error(err)
+            }
+        } else {
+            res.json({mensaje: `Gasto no encontrado con ID: ${id}`})
+        }
     }
-    catch(err){
-        console.log(err)
-    }
-}
+}//------------------------------
 
 const gastosController = {
     getGastos,

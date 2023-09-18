@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import moment from 'moment/moment.js'
 
 const Schema = mongoose.Schema
 const GastoSchema = new Schema({
@@ -16,7 +17,7 @@ const GastoSchema = new Schema({
     },
     createdAt: {
         type: Date, 
-        default: Date.now
+        default: moment(new Date()).format('l')
     },
     muestra: {
         type: Boolean,
