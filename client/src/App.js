@@ -1,31 +1,24 @@
-import {React, useEffect, useState} from 'react'
+import {React} from 'react'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import GastosProvider from './context/gastosContext.js';
+import Home from './pages/Home.js'
+import Gastos from './pages/Gastos.js';
+import NavBar from './components/NavBar.js'
 import './App.css';
 
 function App() {
   
-  const [dataFetch, setDataFetch] = useState()
-
-  useEffect(() =>{
-      try {
-        fetch('/gastos')
-        .then(res => res.json())   
-        .then(datos => {
-          setDataFetch(datos)
-        })
-      } catch (error) {
-        console.log(`Error del fetch: ${error}`)
-      }
-  }, [])
-
-
   return (
-    <div className="App">
-      {
-        (typeof dataFetch?.gastos === 'undefined') 
-        ? (<p>Loading....</p>) 
-        : (dataFetch.gastos.map((el, i) => <p key={i}>{el.gasto}</p>))
-      } 
-    </div>
+    <GastosProvider>
+      <Router>
+        <NavBar/>
+        <Routes>
+          <Route exact path='/' element={<Home />}/>
+          <Route exact path='/gastos' element={<Gastos />}></Route>
+          <Route></Route>
+        </Routes>
+      </Router>
+    </GastosProvider>
   );
 }
 

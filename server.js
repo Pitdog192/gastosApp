@@ -17,10 +17,10 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 //Database Connection
 DBconnection();
 //Routers
-app.use('/gastos', gastosRouter)
+app.use('/api/gastos', gastosRouter)
 
 
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 })
 
