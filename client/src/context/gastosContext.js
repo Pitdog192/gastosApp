@@ -4,7 +4,11 @@ const GastosContext = createContext();
 
 const GastosProvider = ({children}) => {
 
+    //data fectched from api/get
     const [dataFetch, setDataFetch] = useState()
+    //get gastoItem from table
+    const [itemGasto, setItemGasto] = useState()
+
     useEffect(() =>{
         try {
             fetch('api/gastos')

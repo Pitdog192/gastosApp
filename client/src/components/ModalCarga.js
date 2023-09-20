@@ -14,10 +14,8 @@ const ModalCarga = () => {
 
     const submitData = (e) => {
         e.preventDefault()
-
         let myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
-
         fetch('/api/gastos/create', {
             method: 'POST',
             headers: myHeaders,
