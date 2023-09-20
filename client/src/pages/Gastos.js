@@ -1,11 +1,13 @@
 import GastosTable from '../components/GastosTable.js'
 function Gastos(){
     return(
-        <>
+        <main>
             <h1>Pantalla de gastos</h1>
-            <div>Tal vez botones de acciones</div>
+            <div>
+                <a href='/cargar'>Cargar Gasto</a>
+            </div>
             <GastosTable/>
-        </>
+        </main>
     )
 }
 

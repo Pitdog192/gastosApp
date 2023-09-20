@@ -32,6 +32,7 @@ async function getGastos(req, res){
 
 //CREATE FUNCTION
 async function createGasto(req, res){
+    console.log(req.body)
     const newGasto = new GastoModel({
         gasto: req.body.gasto,
         tipo: req.body.tipo,

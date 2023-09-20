@@ -4,7 +4,8 @@ import GastosProvider from './context/gastosContext.js';
 import Home from './pages/Home.js'
 import Gastos from './pages/Gastos.js';
 import NavBar from './components/NavBar.js'
-import './App.css';
+import ModalCarga from './components/ModalCarga.js'
+import './styles/App.css';
 
 function App() {
   
@@ -15,7 +16,7 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Home />}/>
           <Route exact path='/gastos' element={<Gastos />}></Route>
-          <Route></Route>
+          <Route exact path='/cargar' element={<ModalCarga/>}></Route>
         </Routes>
       </Router>
     </GastosProvider>
