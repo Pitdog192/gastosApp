@@ -8,7 +8,6 @@ const ModalCarga = () => {
 
     const handleChange = (e) =>{
         //Setea los datos del formulario por name automaticamente
-        console.log(e.target.value)
         setDatosFormulario({...datosFormulario, [e.target.name]: e.target.value})
     }
 

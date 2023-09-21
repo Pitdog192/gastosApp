@@ -71,8 +71,10 @@ async function updateGasto(req, res){
 //DELETE FUNCTION
 async function deleteGasto(req, res){
     let id = req.params.id
+    console.log(id)
     if(req.params.id){
         let queryResp = await getGasto(id)
+        console.log(queryResp)
         if(queryResp){
             try{
                 const gasto = await GastoModel.findOneAndUpdate({_id : queryResp._id.toString()}, {muestra: false}, {new: true});

@@ -3,10 +3,11 @@ import { useContext } from "react"
 import moment from 'moment'
 
 function GastosTable(){
-    const {dataFetch} = useContext(GastosContext)
+    const {dataFetch, deleteGasto} = useContext(GastosContext)
+    
     return(
         <>
-            { (typeof dataFetch?.gastos === 'undefined') 
+            { (typeof dataFetch === 'undefined') 
                 ? (<p>Loading....</p>) 
                 : <table border="1">
                     <thead>
@@ -19,7 +20,7 @@ function GastosTable(){
                         </tr>
                     </thead>
                     <tbody> 
-                        {(dataFetch.gastos.map((el) => 
+                        {(dataFetch.map((el) => 
                             <tr key={el._id}>
                                 <td>{el.gasto}</td>
                                 <td>{el.tipo}</td>
@@ -27,6 +28,7 @@ function GastosTable(){
                                 <td>{moment(el.createdAt).format('l')}</td>
                                 <td>
                                     <a href="/modifica">Modificar</a>
+                                    <button onClick={() => deleteGasto(el._id)}>Eliminar</button>
                                 </td>
                             </tr>
                         ))}

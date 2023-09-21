@@ -6,22 +6,35 @@ const GastosProvider = ({children}) => {
 
     //data fectched from api/get
     const [dataFetch, setDataFetch] = useState()
-    //get gastoItem from table
-    const [itemGasto, setItemGasto] = useState()
+    const [actualizadoTabla, setActualizadoTabla] = useState(false)
 
     useEffect(() =>{
         try {
             fetch('api/gastos')
             .then(res => res.json())   
             .then(datos => {
-            setDataFetch(datos)
+            let datosFilter= datos.gastos.filter((el) => el.muestra === true)
+            setDataFetch(datosFilter)
             })
         } catch (error) {
             console.log(`Error del fetch: ${error}`)
         }
-    }, [])
+    }, [actualizadoTabla])
+
+    const deleteGasto = (id) => {
+        try{
+            fetch(`api/gastos/delete/${id}`, {
+                method: 'DELETE',
+                headers: {'Content-type': 'application/json; charset=UTF-8'}})
+            .then(() => setActualizadoTabla(true))
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     const data = {
-        dataFetch
+        dataFetch,
+        deleteGasto
     }
 
     return (
