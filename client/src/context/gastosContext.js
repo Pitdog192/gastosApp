@@ -6,7 +6,7 @@ const GastosProvider = ({children}) => {
 
     //data fectched from api/get
     const [dataFetch, setDataFetch] = useState()
-    const [actualizadoTabla, setActualizadoTabla] = useState(false)
+    const [actualizadoTabla, setActualizadoTabla] = useState(true)
 
     useEffect(() =>{
         try {
@@ -15,6 +15,7 @@ const GastosProvider = ({children}) => {
             .then(datos => {
             let datosFilter= datos.gastos.filter((el) => el.muestra === true)
             setDataFetch(datosFilter)
+            setActualizadoTabla(true)
             })
         } catch (error) {
             console.log(`Error del fetch: ${error}`)
@@ -26,7 +27,7 @@ const GastosProvider = ({children}) => {
             fetch(`api/gastos/delete/${id}`, {
                 method: 'DELETE',
                 headers: {'Content-type': 'application/json; charset=UTF-8'}})
-            .then(() => setActualizadoTabla(true))
+            .then(() => setActualizadoTabla(false))
         }catch(err){
             console.log(err)
         }

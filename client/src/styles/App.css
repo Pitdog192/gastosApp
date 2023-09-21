@@ -2,6 +2,33 @@ body{
   margin: 0;
   padding: 0;
   text-align: center;
-  background-color: #a2e88e;
 }
 
+.navBar_div{
+  background-color: #a2e88e;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+    & h1{
+      margin: 0;
+    }
+    & button{
+      height: 30px;
+      padding: 0;
+      margin: 2px;
+      padding: 3px;
+      background-color: #6be14a;
+      border: 1px solid #236212;
+      border-radius: 5px;
+      & a{
+        display: block;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        text-transform: uppercase;
+        height: 100%;
+        line-height: 25px;
+      }
+    }
+}
