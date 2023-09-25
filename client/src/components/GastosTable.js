@@ -1,15 +1,19 @@
 import { GastosContext } from "../context/gastosContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
+import ModalModifica from "./ModalModifica.js"
 import moment from 'moment'
+import CreateForm from "./CreateForm.js"
 
 function GastosTable(){
-    const {dataFetch, deleteGasto} = useContext(GastosContext)
-    
+    const {dataFetch} = useContext(GastosContext)
+    const [ openModalModify, setOpenModalModify] = useState(false)
+    const [gastoId, setGastoId] = useState()
     return(
         <>
+            <CreateForm/>
             { (typeof dataFetch === 'undefined') 
                 ? (<p>Loading....</p>) 
-                : <table border="1">
+                : <table border="1" className="tabla__gastos">
                     <thead>
                         <tr>
                             <th>Gasto</th>
@@ -20,21 +24,24 @@ function GastosTable(){
                         </tr>
                     </thead>
                     <tbody> 
-                        {(dataFetch.map((el) => 
-                            <tr key={el._id}>
-                                <td>{el.gasto}</td>
-                                <td>{el.tipo}</td>
-                                <td>{Math.floor(el.importe)}</td>
-                                <td>{moment(el.createdAt).format('l')}</td>
+                        {(dataFetch.map((gasto) => 
+                            <tr key={gasto._id}>
+                                <td>{gasto.gasto}</td>
+                                <td>{gasto.tipo}</td>
+                                <td>${Math.floor(gasto.importe)}</td>
+                                <td>{moment(gasto.createdAt).format('l')}</td>
                                 <td>
-                                    <a href="/modifica">Modificar</a>
-                                    <button onClick={() => deleteGasto(el._id)}>Eliminar</button>
+                                    <button onClick={() => {
+                                        setOpenModalModify(true)
+                                        setGastoId(gasto._id)
+                                    }}>Edit</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             } 
+            {openModalModify && <ModalModifica setOpenModalModify={setOpenModalModify} gasto={gastoId} />}
         </>
     )
 }

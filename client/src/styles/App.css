@@ -32,3 +32,164 @@ body{
       }
     }
 }
+
+/* MODAL MODIFICAR GASTOS*/
+
+.darkBG {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal {
+  width: 80vw;
+  height: 40vh;
+  background: white;
+  color: white;
+  z-index: 10;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+}
+
+.heading {
+  margin: 0;
+  padding: 10px;
+  color: #2c3e50;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+}
+
+.actionsContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.closeBtn {
+  cursor: pointer;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: none;
+  font-size: 18px;
+  color: #2c3e50;
+  background: rgb(247, 49, 49);
+  transition: all 0.25s ease;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06);
+  position: absolute;
+  right: 0;
+  top: 0;
+  align-self: flex-end;
+  margin-top: -7px;
+  margin-right: -7px;
+}
+
+.closeBtn:hover {
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+  transform: translate(-4px, 4px);
+}
+
+.deleteBtn {
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 11px 28px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: none;
+  background: #ff3e4e;
+  transition: all 0.35s ease;
+}
+
+.deleteBtn:hover {
+  box-shadow: 0 10px 20px -10px rgba(255, 62, 78, 0.6);
+  transform: translateY(-5px);
+  background: #bd1a27;
+  color: white;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.modifyBtn {
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 11px 28px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  border: none;
+  background: #5cb345;
+  transition: all 0.35s ease;
+}
+
+.modifyBtn:hover {
+  color: white;
+  background: #1b500d;
+  transform: translateY(-5px);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.div__form__carga{
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 25px;
+  padding: 5px;
+  min-width: 300px;
+  margin-bottom: 10px;
+  & .form__carga{
+    display: flex;
+    flex-direction: column;
+    max-width: 290px;
+  }
+}
+
+.tabla__gastos{
+  width: 90%;
+  padding: 10px;
+}
+
+.main__gastos{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.div__form__modifica{
+  display: flex;
+  justify-content: center;
+  & .form__modifica{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    & input{
+      border: 1px solid #236212;
+      border-radius: 10px;
+      padding: 5px;
+      background-color: #9ac88d;
+      font-weight: bolder;
+    }
+    & .buttons__modal__modify{
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px;
+      justify-content: space-around;
+    }
+  }
+}

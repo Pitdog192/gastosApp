@@ -15,7 +15,7 @@ const GastosProvider = ({children}) => {
             .then(datos => {
             let datosFilter= datos.gastos.filter((el) => el.muestra === true)
             setDataFetch(datosFilter)
-            setActualizadoTabla(true)
+            setActualizadoTabla(false)
             })
         } catch (error) {
             console.log(`Error del fetch: ${error}`)
@@ -27,7 +27,7 @@ const GastosProvider = ({children}) => {
             fetch(`api/gastos/delete/${id}`, {
                 method: 'DELETE',
                 headers: {'Content-type': 'application/json; charset=UTF-8'}})
-            .then(() => setActualizadoTabla(false))
+            .then(() => setActualizadoTabla(true))
         }catch(err){
             console.log(err)
         }
@@ -35,7 +35,8 @@ const GastosProvider = ({children}) => {
 
     const data = {
         dataFetch,
-        deleteGasto
+        deleteGasto,
+        setActualizadoTabla
     }
 
     return (
