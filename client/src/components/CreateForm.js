@@ -39,11 +39,14 @@ const CreateForm = () => {
             <form onSubmit={submitData} className="form__carga">
                 <label htmlFor="gasto">Gasto</label>
                 <input type="text" placeholder="Gasto" name="gasto" id="gasto" required onChange={handleChange} value={datosFormulario.gasto}/>
+
                 <label htmlFor="gasto">Tipo</label>
                 <input type="text" placeholder="Tipo" name="tipo" id="tipo" required onChange={handleChange} value={datosFormulario.tipo}/>
+
                 <label htmlFor="gasto">Importe</label>
                 <input type="number" placeholder="Importe" name="importe" id="importe" required onChange={handleChange} value={datosFormulario.importe}/>
-                <button className="deleteBtn">Create</button>
+                
+                <button className="deleteBtn">Agregar gasto</button>
             </form>
         </div>
     )

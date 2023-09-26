@@ -33,9 +33,22 @@ const GastosProvider = ({children}) => {
         }
     }
 
+    const modifyGasto = (id,body) => {
+        try{
+            fetch(`api/gastos/update/${id}`,{
+                method: 'DELETE',
+                headers: {'Content-type': 'application/json; charset=UTF-8'},
+                body: body})
+            .then(() => setActualizadoTabla(true))
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     const data = {
         dataFetch,
         deleteGasto,
+        modifyGasto,
         setActualizadoTabla
     }
 

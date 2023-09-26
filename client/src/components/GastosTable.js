@@ -6,6 +6,7 @@ import CreateForm from "./CreateForm.js"
 
 function GastosTable(){
     const {dataFetch} = useContext(GastosContext)
+    const { deleteGasto } = useContext(GastosContext)
     const [ openModalModify, setOpenModalModify] = useState(false)
     const [gastoId, setGastoId] = useState()
     return(
@@ -15,6 +16,9 @@ function GastosTable(){
                 ? (<p>Loading....</p>) 
                 : <table border="1" className="tabla__gastos">
                     <thead>
+                        <tr>
+                            <th colSpan={5}>Gastos del mes</th>
+                        </tr>
                         <tr>
                             <th>Gasto</th>
                             <th>Tipo</th>
@@ -33,8 +37,11 @@ function GastosTable(){
                                 <td>
                                     <button onClick={() => {
                                         setOpenModalModify(true)
-                                        setGastoId(gasto._id)
+                                        setGastoId(gasto)
                                     }}>Edit</button>
+                                    <button onClick={() => {
+                                        deleteGasto(gasto._id)
+                                    }}>X</button>
                                 </td>
                             </tr>
                         ))}
