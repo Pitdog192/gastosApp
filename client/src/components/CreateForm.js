@@ -1,8 +1,9 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { GastosContext } from "../context/gastosContext"
 
 const CreateForm = () => {
     const {setActualizadoTabla} = useContext(GastosContext)
+    const [tipos, setTipos] = useState()
     const [datosFormulario, setDatosFormulario] = useState({
         gasto: '',
         tipo: '',
@@ -13,6 +14,18 @@ const CreateForm = () => {
         //Setea los datos del formulario por name automaticamente
         setDatosFormulario({...datosFormulario, [e.target.name]: e.target.value})
     }
+
+    useEffect(() => {
+        try{
+            fetch('api/gastos/tipos')
+            .then(res => res.json())
+            .then((resp) => {
+                setTipos(resp)
+            })
+        } catch(err){
+            console.log(err)
+        }
+    }, [])
 
     const submitData = (e) => {
         e.preventDefault()
@@ -39,9 +52,20 @@ const CreateForm = () => {
             <form onSubmit={submitData} className="form__carga">
                 <label htmlFor="gasto">Gasto</label>
                 <input type="text" placeholder="Gasto" name="gasto" id="gasto" required onChange={handleChange} value={datosFormulario.gasto}/>
-
+        
                 <label htmlFor="gasto">Tipo</label>
-                <input type="text" placeholder="Tipo" name="tipo" id="tipo" required onChange={handleChange} value={datosFormulario.tipo}/>
+                <select onChange={handleChange} name="tipo" id="tipo">
+                    <option disabled={false}>Tipo</option>
+                    {
+                        (typeof tipos === 'undefined') 
+                        ? <option>Cargando tipos</option> 
+                        : ( tipos.tiposGasto.map((tip => {
+                            return(
+                                <option key={tip._id} required>{tip.tipo}</option>
+                            )
+                        })))
+                    }
+                </select>
 
                 <label htmlFor="gasto">Importe</label>
                 <input type="number" placeholder="Importe" name="importe" id="importe" required onChange={handleChange} value={datosFormulario.importe}/>

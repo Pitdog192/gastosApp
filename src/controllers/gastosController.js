@@ -1,4 +1,5 @@
 import GastoModel from '../models/gastosModel.js'
+import TipoGastoSchema from '../models/tipoGastoModel.js'
 
 //METE TODOS LOS GASTOS EN UN ARRAY TEMPORAL Y FILTRA EL QUE SE ESTÁ BUSCANDO POR ID
 const getGasto = async (id) => {
@@ -12,7 +13,7 @@ const getGasto = async (id) => {
         }
     }
     return gasto
-}
+}//-----------------------------------------
 
 //GET FUNCTION
 async function getGastos(req, res){
@@ -47,7 +48,6 @@ async function createGasto(req, res){
     }
 }//------------------------------
 
-
 //UPDATE FUNCTION
 async function updateGasto(req, res){
     let id = req.params.id
@@ -65,8 +65,6 @@ async function updateGasto(req, res){
         }
     }
 }//---------------------------------
-
-
 
 //DELETE FUNCTION
 async function deleteGasto(req, res){
@@ -88,11 +86,23 @@ async function deleteGasto(req, res){
     }
 }//------------------------------
 
+//LISTA TODOS LOS TIPOS DE GASTOS
+async function getTipos(req, res){
+    try{
+        const tiposGasto = await TipoGastoSchema.find({}).lean()
+        res.json({tiposGasto})
+    } catch (err) {
+        console.log(err)
+    }
+}
+//-----------------------------------------
+
 const gastosController = {
     getGastos,
     createGasto,
     updateGasto,
-    deleteGasto
+    deleteGasto,
+    getTipos
 }
 
 export default gastosController

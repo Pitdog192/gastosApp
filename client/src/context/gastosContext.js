@@ -10,10 +10,10 @@ const GastosProvider = ({children}) => {
 
     useEffect(() =>{
         try {
-            fetch('api/gastos')
+            fetch('api/gastos/gasto')
             .then(res => res.json())   
             .then(datos => {
-            let datosFilter= datos.gastos.filter((el) => el.muestra === true)
+            let datosFilter = datos.gastos.filter((el) => el.muestra === true)
             setDataFetch(datosFilter)
             setActualizadoTabla(false)
             })
@@ -33,22 +33,9 @@ const GastosProvider = ({children}) => {
         }
     }
 
-    const modifyGasto = (id,body) => {
-        try{
-            fetch(`api/gastos/update/${id}`,{
-                method: 'DELETE',
-                headers: {'Content-type': 'application/json; charset=UTF-8'},
-                body: body})
-            .then(() => setActualizadoTabla(true))
-        }catch(err){
-            console.log(err)
-        }
-    }
-
     const data = {
         dataFetch,
         deleteGasto,
-        modifyGasto,
         setActualizadoTabla
     }
 
