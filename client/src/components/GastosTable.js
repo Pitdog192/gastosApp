@@ -3,6 +3,8 @@ import { useContext, useState } from "react"
 import ModalModifica from "./ModalModifica.js"
 import moment from 'moment'
 import CreateForm from "./CreateForm.js"
+import {TbTrashXFilled} from 'react-icons/tb'
+import {TbEdit} from 'react-icons/tb'
 
 function GastosTable(){
     const {dataFetch} = useContext(GastosContext)
@@ -35,13 +37,16 @@ function GastosTable(){
                                 <td>${Math.floor(gasto.importe)}</td>
                                 <td>{moment(gasto.createdAt).format('l')}</td>
                                 <td>
-                                    <button onClick={() => {
-                                        setOpenModalModify(true)
-                                        setGastoId(gasto)
-                                    }}>Edit</button>
-                                    <button onClick={() => {
-                                        deleteGasto(gasto._id)
-                                    }}>X</button>
+                                    <div class="container">
+                                        <div class="element"> <TbEdit className="table__icon__actions green__icon" onClick={() => {
+                                                setOpenModalModify(true)
+                                                setGastoId(gasto)
+                                            }}/> 
+                                        </div>
+                                        <div class="element">
+                                            <TbTrashXFilled className="table__icon__actions red__icon" onClick={() => deleteGasto(gasto._id)}/>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         ))}

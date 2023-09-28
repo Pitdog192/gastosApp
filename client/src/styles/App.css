@@ -193,3 +193,46 @@ body{
     }
   }
 }
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.element {
+  width: 25px;
+  height: 25px;
+  margin: 10px;
+  transition: transform 0.3s ease;
+  border-radius: 5px;
+}
+
+.element:hover {
+  transform: scale(1.2); /* Aumenta el tamaño del elemento al hacer hover */
+}
+
+/* Estilo adicional para resaltar el hover */
+.element:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.table__icon__actions{
+  color: white;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.green__icon{
+  background-color: #3aaa1b;
+  &:hover{
+    background-color: #1b500d;
+  }
+}
+
+.red__icon{
+  background-color: rgb(247, 49, 49);
+  &:hover{
+    background-color: rgb(150, 30, 30);
+  }
+}
