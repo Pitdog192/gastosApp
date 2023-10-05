@@ -1,12 +1,19 @@
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 function NavBar () {
     return(
-        <div className="navBar_div">
-            <h1>Gastos</h1>
-            <div>
-                <button><a href="/">Home</a></button>
-                <button><a href="/gastos">Gastos</a></button>
-            </div>
-        </div>
+        <>
+            <Navbar bg="success" data-bs-theme="dark">
+                <Container>
+                    <Navbar.Brand href="#home">Gastos</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="/gastos">Gastos</Nav.Link>
+                    </Nav>
+                </Container>
+            </Navbar>
+        </>
     )
 }
 

@@ -1,22 +1,35 @@
 import { GastosContext } from "../context/gastosContext"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import ModalModifica from "./ModalModifica.js"
 import moment from 'moment'
 import CreateForm from "./CreateForm.js"
 import {TbTrashXFilled} from 'react-icons/tb'
 import {TbEdit} from 'react-icons/tb'
+import Table from 'react-bootstrap/Table';
 
 function GastosTable(){
     const {dataFetch} = useContext(GastosContext)
     const { deleteGasto } = useContext(GastosContext)
-    const [ openModalModify, setOpenModalModify] = useState(false)
+    const [openModalModify, setOpenModalModify] = useState(false)
     const [gastoId, setGastoId] = useState()
+    const [tipos, setTipos] = useState()
+    useEffect(() => {
+        try{
+            fetch('api/gastos/tipos')
+            .then(res => res.json())
+            .then((resp) => {
+                setTipos(resp)
+            })
+        } catch(err){
+            console.log(err)
+        }
+    }, [])
     return(
         <>
-            <CreateForm/>
+            <CreateForm tipos={tipos}/>
             { (typeof dataFetch === 'undefined') 
                 ? (<p>Loading....</p>) 
-                : <table border="1" className="tabla__gastos">
+                : <Table striped bordered hover variant="dark">
                     <thead>
                         <tr>
                             <th colSpan={5}>Gastos del mes</th>
@@ -26,7 +39,7 @@ function GastosTable(){
                             <th>Tipo</th>
                             <th>Importe</th>
                             <th>Creado</th>
-                            <th>Acciones</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody> 
@@ -37,23 +50,20 @@ function GastosTable(){
                                 <td>${Math.floor(gasto.importe)}</td>
                                 <td>{moment(gasto.createdAt).format('l')}</td>
                                 <td>
-                                    <div class="container">
-                                        <div class="element"> <TbEdit className="table__icon__actions green__icon" onClick={() => {
+                                    <div className="container__table__buttons">
+                                        <TbEdit className="table__icon__actions green__icon element" onClick={() => {
                                                 setOpenModalModify(true)
                                                 setGastoId(gasto)
-                                            }}/> 
-                                        </div>
-                                        <div class="element">
-                                            <TbTrashXFilled className="table__icon__actions red__icon" onClick={() => deleteGasto(gasto._id)}/>
-                                        </div>
+                                            }}/>
+                                        <TbTrashXFilled className="table__icon__actions red__icon element" onClick={() => deleteGasto(gasto._id)}/>
                                     </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </Table>
             } 
-            {openModalModify && <ModalModifica setOpenModalModify={setOpenModalModify} gasto={gastoId} />}
+            {openModalModify && <ModalModifica setOpenModalModify={setOpenModalModify} gasto={gastoId} tipos={tipos} openModalModify={openModalModify}/>}
         </>
     )
 }

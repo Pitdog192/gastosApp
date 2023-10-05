@@ -4,235 +4,43 @@ body{
   text-align: center;
 }
 
-.navBar_div{
-  background-color: #a2e88e;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-    & h1{
-      margin: 0;
-    }
-    & button{
-      height: 30px;
-      padding: 0;
-      margin: 2px;
-      padding: 3px;
-      background-color: #6be14a;
-      border: 1px solid #236212;
-      border-radius: 5px;
-      & a{
-        display: block;
-        text-decoration: none;
-        color: black;
-        text-align: center;
-        text-transform: uppercase;
-        height: 100%;
-        line-height: 25px;
-      }
-    }
-}
-
-/* MODAL MODIFICAR GASTOS*/
-
-.darkBG {
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 98vw;
-  height: 200vh;
-  z-index: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-}
-
-.centered {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.modal {
-  width: 65vw;
-  height: 40vh;
-  background: white;
-  color: white;
-  z-index: 10;
-  border-radius: 16px;
-  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
-}
-
-.heading {
-  margin: 0;
-  padding: 10px;
-  color: #2c3e50;
-  font-weight: 500;
-  font-size: 18px;
+.main__gastos{
   text-align: center;
-}
-
-.actionsContainer {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.closeBtn {
-  cursor: pointer;
-  font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 8px;
-  border: none;
-  font-size: 18px;
-  color: #2c3e50;
-  background: rgb(247, 49, 49);
-  transition: all 0.25s ease;
-  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06);
-  position: absolute;
-  right: 0;
-  top: 0;
-  align-self: flex-end;
-  margin-top: -7px;
-  margin-right: -7px;
-}
-
-.closeBtn:hover {
-  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
-  transform: translate(-4px, 4px);
-}
-
-.deleteBtn {
-  margin-top: 10px;
-  cursor: pointer;
-  font-weight: 500;
-  padding: 11px 28px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  border: none;
-  background: #a2e88e;
-  transition: all 0.35s ease;
-}
-
-.deleteBtn:hover {
-  box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.6);
-  transform: translateY(-5px);
-  background: #2c6d1a;
-  color: white;
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-}
-
-.modifyBtn {
-  margin-top: 10px;
-  cursor: pointer;
-  font-weight: 500;
-  padding: 11px 28px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  border: none;
-  background: #5cb345;
-  transition: all 0.35s ease;
-}
-
-.modifyBtn:hover {
-  color: white;
-  background: #1b500d;
-  transform: translateY(-5px);
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 .div__form__carga{
   display: flex;
   justify-content: center;
-  border: 1px solid black;
-  border-radius: 25px;
-  padding: 5px;
-  min-width: 300px;
   margin-bottom: 10px;
-  & .form__carga{
-    display: flex;
-    flex-direction: column;
-    max-width: 290px;
-  }
 }
 
-.tabla__gastos{
-  width: 85%;
-  padding: 10px;
-}
-
-.main__gastos{
+.container__table__buttons{
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
-.div__form__modifica{
-  display: flex;
-  justify-content: center;
-  & .form__modifica{
-    display: flex;
-    flex-direction: column;
-    width: 95%;
-    & input{
-      border: 1px solid #236212;
-      border-radius: 10px;
-      padding: 5px;
-      background-color: #9ac88d;
-      font-weight: bolder;
-    }
-    & .buttons__modal__modify{
-      display: flex;
-      flex-wrap: wrap;
-      padding: 5px;
-      justify-content: space-around;
-    }
-  }
-}
-
-.container {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.element {
-  width: 25px;
-  height: 25px;
-  margin: 10px;
-  transition: transform 0.3s ease;
+.table__icon__actions {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.4s ease;
   border-radius: 5px;
-}
-
-.element:hover {
-  transform: scale(1.2); /* Aumenta el tamaño del elemento al hacer hover */
-}
-
-/* Estilo adicional para resaltar el hover */
-.element:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.table__icon__actions{
-  color: white;
-  height: 100%;
-  width: 100%;
-  border-radius: 5px;
+  &:hover{
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .green__icon{
-  background-color: #3aaa1b;
+  background-color: #83d36d;
   &:hover{
-    background-color: #1b500d;
+    background-color: #408e2b;
   }
 }
 
 .red__icon{
-  background-color: rgb(247, 49, 49);
+  background-color: rgb(245, 22, 22);
   &:hover{
-    background-color: rgb(150, 30, 30);
+    background-color: rgb(144, 7, 7)
   }
 }

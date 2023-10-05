@@ -5,6 +5,7 @@ import Home from './pages/Home.js'
 import Gastos from './pages/Gastos.js';
 import NavBar from './components/NavBar.js'
 import './styles/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   
