@@ -6,12 +6,17 @@ body{
 
 .main__gastos{
   text-align: center;
+  & .main__gastos_title{
+    background-color: #99fe80;
+    margin: 0;
+  }
 }
 
 .div__form__carga{
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  background-color: #beffad;
+  padding-bottom: 10px;
 }
 
 .container__table__buttons{
@@ -43,4 +48,8 @@ body{
   &:hover{
     background-color: rgb(144, 7, 7)
   }
+}
+
+.td__tipo{
+  background-color: red;
 }

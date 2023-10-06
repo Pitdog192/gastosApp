@@ -63,7 +63,7 @@ const CreateForm = ({tipos}) => {
                         <Form.Label htmlFor="importe">Importe</Form.Label>
                         <Form.Control type="number" placeholder="Importe" name="importe" id="importe" required onChange={handleChange} value={datosFormulario.importe}/>
                     </Form.Group>
-                    <Button type="submit">Agregar gasto</Button>
+                    <Button type="submit" variant="success">Agregar gasto</Button>
                 </fieldset>
             </Form>
         </div>

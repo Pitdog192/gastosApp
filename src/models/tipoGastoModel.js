@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
-import moment from 'moment/moment.js'
 
+let fecha = new Date();
+let fechaCreacion = `${fecha.getDate()}/${fecha.getMonth()}/${fecha.getFullYear()}`;
+console.log(fechaCreacion)
 const Schema = mongoose.Schema;
 const tipoGasto = new Schema({
     tipo: {
@@ -9,7 +11,7 @@ const tipoGasto = new Schema({
     },
     createdAt: {
         type: Date, 
-        default: moment(new Date()).format('l')
+        default: fechaCreacion
     },
 })
 
