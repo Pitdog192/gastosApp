@@ -13,9 +13,9 @@ const GastosProvider = ({children}) => {
             fetch('api/gastos/gasto')
             .then(res => res.json())   
             .then(datos => {
-            let datosFilter = datos.gastos.filter((el) => el.muestra === true)
-            setDataFetch(datosFilter)
-            setActualizadoTabla(false)
+                let datosFilter = datos.gastos.filter((el) => el.muestra === true)
+                setDataFetch(datosFilter)
+                setActualizadoTabla(false)
             })
         } catch (error) {
             console.log(`Error del fetch: ${error}`)
@@ -35,6 +35,7 @@ const GastosProvider = ({children}) => {
 
     const data = {
         dataFetch,
+        setDataFetch,
         deleteGasto,
         setActualizadoTabla
     }

@@ -1,28 +1,31 @@
 import { GastosContext } from "../context/gastosContext"
-import { useContext, useState, useEffect } from "react"
+import { useContext, useState, useEffect} from "react"
 import ModalModifica from "./ModalModifica.js"
 import CreateForm from "./CreateForm.js"
-import {TbTrashXFilled} from 'react-icons/tb'
-import {TbEdit} from 'react-icons/tb'
 import Table from 'react-bootstrap/Table';
+import TableRow from "./tableRow";
 
 function GastosTable(){
+
     const { dataFetch } = useContext(GastosContext)
-    const { deleteGasto } = useContext(GastosContext)
     const [openModalModify, setOpenModalModify] = useState(false)
     const [gastoId, setGastoId] = useState()
     const [tipos, setTipos] = useState()
-    let arrayImportes = []
-    let importeTotal;
+    const [search, setSearch] = useState('')
+    const [tipoSearch, setTipoSearch] = useState('')
 
-    if(typeof dataFetch === 'undefined'){
-        console.log("Cargando")
-    } else {
-        dataFetch.map((item) => {
-            return arrayImportes.push(item.importe)
-        })
-        importeTotal = arrayImportes.reduce((acc, cur) => acc + cur + 0)
+    const arrayImportes = []
+    const importeTotal = () => {
+        setTimeout(() => {
+            let resultado = arrayImportes.reduce((a, v) => a + v, 0)
+            console.log(resultado)
+            return resultado
+        }, 500);
     }
+    
+
+    console.log(arrayImportes)
+    importeTotal()
 
     useEffect(() => {
         try{
@@ -35,6 +38,7 @@ function GastosTable(){
             console.log(err)
         }
     }, [])
+
     return(
         <>
             <CreateForm tipos={tipos}/>
@@ -46,52 +50,32 @@ function GastosTable(){
                             <th colSpan={5}>Gastos del mes</th>
                         </tr>
                         <tr>
-                            <th>Creado</th>
-                            <th>Gasto</th>
-                            <th>Tipo</th>
-                            <th>Importe</th>
                             <th></th>
+                            <th><input onChange={(e) => setSearch(e.target.value)} placeholder="Buscar"/></th>
+                            <th><input onChange={(e) => setTipoSearch(e.target.value)} placeholder="Tipo"/></th>
+                            <th colSpan={2}></th>
                         </tr>
                     </thead>
                     <tbody> 
-                        {(dataFetch.map((gasto) => {
-                            let gastoTipoClass
-                            switch (gasto.tipo) {
-                                case "Comida": gastoTipoClass = "bg-success"
-                                    break;
-                                case "Medicina": gastoTipoClass = "bg-success"
-                                    break;
-                                case "Gusto": gastoTipoClass = "bg-warning"
-                                    break;
-                                case "Salida": gastoTipoClass = "bg-danger"
-                                    break;
-                                default: gastoTipoClass = ""
-                                    break;
-                            }
-                            let fechaCreacion = new Date(gasto.createdAt)
-                            let fechaGasto = `${fechaCreacion.getDate()}/${fechaCreacion.getMonth()}/${fechaCreacion.getFullYear()}`;
-                            return(
-                                <tr key={gasto._id}>
-                                    <td>{fechaGasto}</td>
-                                    <td>{gasto.gasto}</td>
-                                    <td className={`${gastoTipoClass} bg-gradient`}>{gasto.tipo}</td>
-                                    <td>${Math.floor(gasto.importe)}</td>
-                                    <td>
-                                        <div className="container__table__buttons">
-                                            <TbEdit className="table__icon__actions green__icon element" onClick={() => {
-                                                    setOpenModalModify(true)
-                                                    setGastoId(gasto)
-                                                }}/>
-                                            <TbTrashXFilled className="table__icon__actions red__icon element" onClick={() => deleteGasto(gasto._id)}/>
-                                        </div>
-                                    </td>
-                                </tr>
-                            )
-                        }
-                        ))}
+                        {(dataFetch
+                            .filter((gastos) => {
+                                return search.toLowerCase() === ''
+                                    ? gastos
+                                    : gastos.gasto.toLowerCase().includes(search)
+                            })
+                            .filter((tipoGasto) => {
+                                return tipoSearch.toLocaleLowerCase() === ''
+                                    ? tipoGasto
+                                    : tipoGasto.tipo.toLocaleLowerCase().includes(tipoSearch)
+                            })
+                            .map((gasto) => {
+                                arrayImportes.push(gasto.importe)
+                                return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify}/> )
+                            })
+                        )}
                         <tr>
                             <th colSpan={3}>Total</th>
-                            <th colSpan={2}>${importeTotal}</th>
+                            {/* <th colSpan={2}>${importeTotal}</th> */}
                         </tr>
                     </tbody>
                 </Table>
