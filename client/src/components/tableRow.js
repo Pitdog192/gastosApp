@@ -1,11 +1,12 @@
 import { GastosContext } from "../context/gastosContext"
-import { useContext} from "react"
+import { useContext, useEffect} from "react"
 import {TbTrashXFilled} from 'react-icons/tb'
 import {TbEdit} from 'react-icons/tb'
 
-function TableRow ({gasto, setGastoId, setOpenModalModify}) {
+function TableRow ({gasto, setGastoId, setOpenModalModify, setImportes}) {
 
     const { deleteGasto } = useContext(GastosContext)
+
     let gastoTipoClass
     switch (gasto.tipo) {
         case "Comida": gastoTipoClass = "bg-success"
@@ -21,6 +22,7 @@ function TableRow ({gasto, setGastoId, setOpenModalModify}) {
     }
     let fechaCreacion = new Date(gasto.createdAt)
     let fechaGasto = `${fechaCreacion.getDate()}/${fechaCreacion.getMonth()}/${fechaCreacion.getFullYear()}`;
+    useEffect(() => setImportes(prevArray => [...prevArray, gasto.importe]), [gasto.importe, setImportes]);
 
     return (
         <tr>

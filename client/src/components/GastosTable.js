@@ -13,21 +13,10 @@ function GastosTable(){
     const [tipos, setTipos] = useState()
     const [search, setSearch] = useState('')
     const [tipoSearch, setTipoSearch] = useState('')
-
-    const arrayImportes = []
-    const importeTotal = () => {
-        setTimeout(() => {
-            let resultado = arrayImportes.reduce((a, v) => a + v, 0)
-            console.log(resultado)
-            return resultado
-        }, 500);
-    }
-    
-
-    console.log(arrayImportes)
-    importeTotal()
+    const [importes, setImportes] = useState([])
 
     useEffect(() => {
+        
         try{
             fetch('api/gastos/tipos')
             .then(res => res.json())
@@ -51,7 +40,10 @@ function GastosTable(){
                         </tr>
                         <tr>
                             <th></th>
-                            <th><input onChange={(e) => setSearch(e.target.value)} placeholder="Buscar"/></th>
+                            <th><input onChange={(e) => {
+                                setSearch(e.target.value)
+                                setImportes([])
+                            }} placeholder="Buscar"/></th>
                             <th><input onChange={(e) => setTipoSearch(e.target.value)} placeholder="Tipo"/></th>
                             <th colSpan={2}></th>
                         </tr>
@@ -69,13 +61,12 @@ function GastosTable(){
                                     : tipoGasto.tipo.toLocaleLowerCase().includes(tipoSearch)
                             })
                             .map((gasto) => {
-                                arrayImportes.push(gasto.importe)
-                                return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify}/> )
+                                return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} setImportes={setImportes}/> )
                             })
                         )}
                         <tr>
                             <th colSpan={3}>Total</th>
-                            {/* <th colSpan={2}>${importeTotal}</th> */}
+                            <th colSpan={2}>${importes.reduce((a, c) => a + c, 0)}</th>
                         </tr>
                     </tbody>
                 </Table>
