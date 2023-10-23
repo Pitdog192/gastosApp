@@ -29,7 +29,7 @@ function TableRow ({gasto, setGastoId, setOpenModalModify, setImportes}) {
             <td>{fechaGasto}</td>
             <td>{gasto.gasto}</td>
             <td className={`${gastoTipoClass} bg-gradient`}>{gasto.tipo}</td>
-            <td id="importes__table">${Math.floor(gasto.importe)}</td>
+            <td className="importes__table">${Math.floor(gasto.importe)}</td>
             <td>
                 <div className="container__table__buttons">
                     <TbEdit className="table__icon__actions green__icon element" onClick={() => {

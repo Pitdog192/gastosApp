@@ -4,6 +4,7 @@ import ModalModifica from "./ModalModifica.js"
 import CreateForm from "./CreateForm.js"
 import Table from 'react-bootstrap/Table';
 import TableRow from "./tableRow";
+import Importes from "./Importes";
 
 function GastosTable(){
 
@@ -66,7 +67,7 @@ function GastosTable(){
                         )}
                         <tr>
                             <th colSpan={3}>Total</th>
-                            <th colSpan={2}>${importes.reduce((a, c) => a + c, 0)}</th>
+                            <Importes arrayImportes={document.getElementsByClassName('importes__table')}/>
                         </tr>
                     </tbody>
                 </Table>
