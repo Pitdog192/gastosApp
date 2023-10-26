@@ -39,6 +39,7 @@ async function createGasto(req, res){
         importe: req.body.importe,
         createdAt: req.body.createdAt
     })
+    console.log(newGasto)
     try{
         await GastoModel.create(newGasto);
         res.json({mensaje: "Ruta createGasto"})

@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import { GastosContext } from "../context/gastosContext"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Swal from "sweetalert2";
 
 const CreateForm = ({tipos}) => {
     const {setActualizadoTabla} = useContext(GastosContext)
@@ -27,7 +28,13 @@ const CreateForm = ({tipos}) => {
             cache: 'default',
             body: JSON.stringify(datosFormulario)
         }).then(() =>{
-            console.log("Carga realizada")
+            Swal.fire({
+                title: `${datosFormulario.gasto} cargado con éxito!`,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+            })
             setActualizadoTabla(true)
             setDatosFormulario({
                 gasto: '',

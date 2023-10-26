@@ -3,6 +3,7 @@ import { GastosContext } from "../context/gastosContext.js"
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
+import Swal from "sweetalert2"
 
 const ModalModifica = ({setOpenModalModify, gasto, tipos, openModalModify}) => {
     const {setActualizadoTabla} = useContext(GastosContext)
@@ -25,6 +26,12 @@ const ModalModifica = ({setOpenModalModify, gasto, tipos, openModalModify}) => {
             cache: 'default',
             body: JSON.stringify(datosFormularioUpdate)
         }).then(() =>{
+            Swal.fire({
+                title: `Gasto actualizado con éxito ${datosFormularioUpdate.gasto}, ${datosFormularioUpdate.tipo}, $${datosFormularioUpdate.importe}`,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            })
             setActualizadoTabla(true)
             setDatosFormularioUpdate({
                 gasto: '',
@@ -69,11 +76,12 @@ const ModalModifica = ({setOpenModalModify, gasto, tipos, openModalModify}) => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setOpenModalModify(false)}>Cerrar </Button>
                     <Button variant="primary" type="button" onClick={() => {
                                 setOpenModalModify(false)
                                 submitData()}
-                            }>Guardar Cambios</Button>
+                            }>Guardar Cambios
+                    </Button>
+                    <Button variant="secondary" onClick={() => setOpenModalModify(false)}>Cerrar </Button>
                 </Modal.Footer>
             </Modal>
         </>

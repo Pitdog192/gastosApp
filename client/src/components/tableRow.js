@@ -1,9 +1,9 @@
 import { GastosContext } from "../context/gastosContext"
-import { useContext, useEffect} from "react"
+import { useContext} from "react"
 import {TbTrashXFilled} from 'react-icons/tb'
 import {TbEdit} from 'react-icons/tb'
 
-function TableRow ({gasto, setGastoId, setOpenModalModify, setImportes}) {
+function TableRow ({gasto, setGastoId, setOpenModalModify}) {
 
     const { deleteGasto } = useContext(GastosContext)
 
@@ -21,8 +21,7 @@ function TableRow ({gasto, setGastoId, setOpenModalModify, setImportes}) {
             break;
     }
     let fechaCreacion = new Date(gasto.createdAt)
-    let fechaGasto = `${fechaCreacion.getDate()}/${fechaCreacion.getMonth()}/${fechaCreacion.getFullYear()}`;
-    useEffect(() => setImportes(prevArray => [...prevArray, gasto.importe]), [gasto.importe, setImportes]);
+    let fechaGasto = `${fechaCreacion.getDate()}/${(fechaCreacion.getMonth() + 1)}/${fechaCreacion.getFullYear()}`;
 
     return (
         <tr>

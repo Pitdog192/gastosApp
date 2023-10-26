@@ -14,10 +14,9 @@ function GastosTable(){
     const [tipos, setTipos] = useState()
     const [search, setSearch] = useState('')
     const [tipoSearch, setTipoSearch] = useState('')
-    const [importes, setImportes] = useState([])
+    const [fecha, setFecha] = useState(new Date())
 
     useEffect(() => {
-        
         try{
             fetch('api/gastos/tipos')
             .then(res => res.json())
@@ -40,11 +39,16 @@ function GastosTable(){
                             <th colSpan={5}>Gastos del mes</th>
                         </tr>
                         <tr>
-                            <th></th>
-                            <th><input onChange={(e) => {
-                                setSearch(e.target.value)
-                                setImportes([])
-                            }} placeholder="Buscar"/></th>
+                            <th><input type="month" onChange={(e) => {
+                                console.log(e.target.value)
+                                if(e.target.value !== ''){
+                                    console.log(new Date(e.target.value))
+                                    setFecha(new Date(e.target.value))
+                                } else {
+                                    setFecha(new Date())
+                                }
+                            }}/></th>
+                            <th><input onChange={(e) => setSearch(e.target.value)} placeholder="Buscar"/></th>
                             <th><input onChange={(e) => setTipoSearch(e.target.value)} placeholder="Tipo"/></th>
                             <th colSpan={2}></th>
                         </tr>
@@ -62,7 +66,12 @@ function GastosTable(){
                                     : tipoGasto.tipo.toLocaleLowerCase().includes(tipoSearch)
                             })
                             .map((gasto) => {
-                                return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} setImportes={setImportes}/> )
+                                let gastoFecha = new Date(gasto.createdAt)
+                                if((fecha.getUTCMonth() + 1).toString() === (gastoFecha.getUTCMonth() + 1).toString()){
+                                    return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} /> )
+                                } else {
+                                    return undefined
+                                }
                             })
                         )}
                         <tr>
