@@ -6,11 +6,13 @@ import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form'
 import TableRow from "./tableRow";
 import Importes from "./Importes";
+import { SlPlus } from "react-icons/sl";
 
 function GastosTable(){
 
     const { dataFetch } = useContext(GastosContext)
     const [openModalModify, setOpenModalModify] = useState(false)
+    const [openModalCreate, setOpenModalCreate] = useState(false)
     const [gastoId, setGastoId] = useState()
     const [tipos, setTipos] = useState()
     const [search, setSearch] = useState('')
@@ -34,13 +36,15 @@ function GastosTable(){
     }
     return(
         <>
-            <CreateForm tipos={tipos}/>
+            {openModalCreate && <CreateForm tipos={tipos} setOpenModalCreate={setOpenModalCreate} openModalCreate={openModalCreate}/>}
+            <SlPlus className="boton-fijo" onClick={() => {setOpenModalCreate(true)}}/>
             { (typeof dataFetch === 'undefined') 
                 ? (<p>Loading....</p>) 
                 : <Table bordered variant="success">
                     <thead>
                         <tr>
                             <th colSpan={5}>Gastos del mes</th>
+                            
                         </tr>
                         <tr>
                             <th><Form.Control type="month" onChange={(e) => {
@@ -76,7 +80,6 @@ function GastosTable(){
                                     : tipoGasto.tipo.toLocaleLowerCase().includes(tipoSearch)
                             })
                             .map((gasto) => {
-                                console.log(gasto)
                                 let gastoFecha = new Date(gasto.createdAt)
                                 if((fecha.getUTCMonth() + 1).toString() === (gastoFecha.getUTCMonth() + 1).toString()){
                                     return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} /> )

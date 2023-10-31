@@ -55,3 +55,21 @@ body{
 .td__tipo{
   background-color: red;
 }
+
+.boton-fijo {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+  width: 75px; 
+  height: 75px; 
+  background-color: #408e2b;
+  color: #fff; 
+  border-radius: 50%; 
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: all 0.3s ease;
+  text-align: center;
+  &:hover{
+    transform: scale(1.15); 
+  }
+}
