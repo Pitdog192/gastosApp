@@ -3,6 +3,7 @@ import { GastosContext } from "../context/gastosContext"
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Swal from "sweetalert2";
+import TableSelect from "./tableSelect";
 
 const CreateForm = ({tipos}) => {
     const {setActualizadoTabla} = useContext(GastosContext)
@@ -53,18 +54,7 @@ const CreateForm = ({tipos}) => {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label htmlFor="tipo">Tipo</Form.Label>
-                        <Form.Select onChange={handleChange} name="tipo" id="tipo">
-                            <option disabled={false}>Tipo</option>
-                            {
-                                (typeof tipos === 'undefined') 
-                                ? <option>Cargando tipos</option> 
-                                : ( tipos.tiposGasto.map((tip => {
-                                    return(
-                                        <option key={tip._id} required>{tip.tipo}</option>
-                                    )
-                                })))
-                            }
-                        </Form.Select>
+                        <TableSelect funcion={handleChange} tipos={tipos}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label htmlFor="importe">Importe</Form.Label>

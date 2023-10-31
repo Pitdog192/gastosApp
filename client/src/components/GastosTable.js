@@ -3,6 +3,7 @@ import { useContext, useState, useEffect} from "react"
 import ModalModifica from "./ModalModifica.js"
 import CreateForm from "./CreateForm.js"
 import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form'
 import TableRow from "./tableRow";
 import Importes from "./Importes";
 
@@ -26,30 +27,39 @@ function GastosTable(){
         } catch(err){
             console.log(err)
         }
-    }, [])
+    }, [])  
 
+    const handleChangeFilter = event => {
+        setTipoSearch(event.target.value);
+    }
     return(
         <>
             <CreateForm tipos={tipos}/>
             { (typeof dataFetch === 'undefined') 
                 ? (<p>Loading....</p>) 
-                : <Table bordered variant="dark">
+                : <Table bordered variant="success">
                     <thead>
                         <tr>
                             <th colSpan={5}>Gastos del mes</th>
                         </tr>
                         <tr>
-                            <th><input type="month" onChange={(e) => {
-                                console.log(e.target.value)
+                            <th><Form.Control type="month" onChange={(e) => {
                                 if(e.target.value !== ''){
-                                    console.log(new Date(e.target.value))
                                     setFecha(new Date(e.target.value))
                                 } else {
                                     setFecha(new Date())
                                 }
                             }}/></th>
-                            <th><input onChange={(e) => setSearch(e.target.value)} placeholder="Buscar"/></th>
-                            <th><input onChange={(e) => setTipoSearch(e.target.value)} placeholder="Tipo"/></th>
+                            <th><Form.Control onChange={(e) => setSearch(e.target.value)} placeholder="Buscar"/></th>
+                            {/* <th><Form.Control onChange={(e) => setTipoSearch(e.target.value)} placeholder="Tipo"/></th> */}
+                            <th>
+                                <Form.Select value={tipoSearch} onChange={handleChangeFilter}>
+                                    <option value="">Todos</option>
+                                    {(typeof tipos === 'undefined') 
+                                        ? <option>Cargando tipos</option> 
+                                        : (tipos.tiposGasto.map((tip => {return(<option key={tip._id} value={tip.tipo.toLocaleLowerCase()}>{tip.tipo}</option>)})))}
+                                </Form.Select>
+                            </th>
                             <th colSpan={2}></th>
                         </tr>
                     </thead>
@@ -66,10 +76,11 @@ function GastosTable(){
                                     : tipoGasto.tipo.toLocaleLowerCase().includes(tipoSearch)
                             })
                             .map((gasto) => {
+                                console.log(gasto)
                                 let gastoFecha = new Date(gasto.createdAt)
                                 if((fecha.getUTCMonth() + 1).toString() === (gastoFecha.getUTCMonth() + 1).toString()){
                                     return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} /> )
-                                } else {
+                                }  else {
                                     return undefined
                                 }
                             })

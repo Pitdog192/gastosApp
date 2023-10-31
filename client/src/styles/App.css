@@ -7,8 +7,9 @@ body{
 .main__gastos{
   text-align: center;
   & .main__gastos_title{
-    background-color: #99fe80;
+    background-color: #beffad;
     margin: 0;
+    text-decoration: underline;
   }
 }
 
