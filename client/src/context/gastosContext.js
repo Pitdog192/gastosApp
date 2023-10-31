@@ -62,11 +62,25 @@ const GastosProvider = ({children}) => {
         
     }
 
+    const formateoFecha = (fechaParam) => {
+        const fecha = new Date(fechaParam);
+        fecha.setUTCHours(0, 0, 0, 0); // Establecer la hora en UTC
+        const dia = fecha.getUTCDate();
+        const mes = fecha.getUTCMonth() + 1; // Sumamos 1 porque los meses comienzan desde 0 (enero) hasta 11 (diciembre)
+        const anio = fecha.getUTCFullYear();
+        // Asegurémonos de que el día y el mes tengan el formato 'dd/mm'
+        const diaFormateado = dia < 10 ? '0' + dia : dia;
+        const mesFormateado = mes < 10 ? '0' + mes : mes;
+        const fechaTransformada = `${diaFormateado}/${mesFormateado}/${anio}`;
+        return fechaTransformada
+    }
+
     const data = {
         dataFetch,
         setDataFetch,
         deleteGasto,
-        setActualizadoTabla
+        setActualizadoTabla,
+        formateoFecha
     }
 
     return (

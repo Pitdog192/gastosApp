@@ -15,7 +15,7 @@ const Importes = (arrayImportes) => {
     }, [arrayImportes])
     
     return(
-        <th colSpan={2}>${importesTotales.reduce((a,c) => a + c, 0)}</th>
+        <th colSpan={2} className="fila-totales">${importesTotales.reduce((a,c) => a + c, 0)}</th>
     )
 }
 

@@ -15,9 +15,9 @@ const GastoSchema = new Schema({
         type: Number,
         required:true
     },
-    createdAt: {
-        type: Date, 
-        default: moment(new Date()).format('l')
+    fecha: {
+        type: Date,
+        required:true
     },
     muestra: {
         type: Boolean,

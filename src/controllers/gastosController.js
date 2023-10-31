@@ -37,7 +37,7 @@ async function createGasto(req, res){
         gasto: req.body.gasto,
         tipo: req.body.tipo,
         importe: req.body.importe,
-        createdAt: req.body.createdAt
+        fecha: req.body.fecha
     })
     console.log(newGasto)
     try{

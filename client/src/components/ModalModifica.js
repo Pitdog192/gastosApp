@@ -6,11 +6,12 @@ import Form from 'react-bootstrap/Form'
 import Swal from "sweetalert2"
 
 const ModalModifica = ({setOpenModalModify, gasto, tipos, openModalModify}) => {
-    const {setActualizadoTabla} = useContext(GastosContext)
+    const {setActualizadoTabla, formateoFecha} = useContext(GastosContext)
     const [datosFormularioUpdate, setDatosFormularioUpdate] = useState({
         gasto: gasto.gasto,
         tipo: gasto.tipo,
-        importe: gasto.importe
+        importe: gasto.importe,
+        fecha: gasto.fecha
     })
     const handleChange = (e) =>{
         //Setea los datos del formulario por name automaticamente
@@ -36,11 +37,13 @@ const ModalModifica = ({setOpenModalModify, gasto, tipos, openModalModify}) => {
             setDatosFormularioUpdate({
                 gasto: '',
                 tipo: '',
-                importe: ''
+                importe: '',
+                fecha: ''
             })
         })
     }
-
+    const partes = formateoFecha(gasto.fecha).split('/'); 
+    const fechaFormateada = `${partes[2]}-${partes[1]}-${partes[0]}`;
     return(
         <>
             <Modal show={openModalModify}>
@@ -72,6 +75,10 @@ const ModalModifica = ({setOpenModalModify, gasto, tipos, openModalModify}) => {
                         <Form.Group className="mb-3">
                             <Form.Label htmlFor="importe">Importe</Form.Label>
                             <Form.Control type="number" placeholder="Importe" name="importe" id="importe" required defaultValue={gasto.importe} onChange={handleChange}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label htmlFor="importe">Importe</Form.Label>
+                            <Form.Control type="date" name="fecha" id="fecha" required defaultValue={fechaFormateada} onChange={handleChange}/>
                         </Form.Group>
                     </Form>
                 </Modal.Body>

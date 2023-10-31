@@ -4,9 +4,8 @@ import {TbTrashXFilled} from 'react-icons/tb'
 import {TbEdit} from 'react-icons/tb'
 
 function TableRow ({gasto, setGastoId, setOpenModalModify}) {
-
-    const { deleteGasto } = useContext(GastosContext)
-
+    
+    const { deleteGasto, formateoFecha } = useContext(GastosContext)
     let gastoTipoClass
     switch (gasto.tipo) {
         case "Comida": gastoTipoClass = "bg-success"
@@ -20,12 +19,10 @@ function TableRow ({gasto, setGastoId, setOpenModalModify}) {
         default: gastoTipoClass = ""
             break;
     }
-    let fechaCreacion = new Date(gasto.createdAt)
-    let fechaGasto = `${fechaCreacion.getDate()}/${(fechaCreacion.getMonth() + 1)}/${fechaCreacion.getFullYear()}`;
 
     return (
         <tr>
-            <td>{fechaGasto}</td>
+            <td>{formateoFecha(gasto.fecha)}</td>
             <td>{gasto.gasto}</td>
             <td className={`${gastoTipoClass} bg-gradient`}>{gasto.tipo}</td>
             <td className="importes__table">${Math.floor(gasto.importe)}</td>

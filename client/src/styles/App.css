@@ -73,3 +73,7 @@ body{
     transform: scale(1.15); 
   }
 }
+
+.fila-totales{
+  background-color: #408e2b !important;
+}

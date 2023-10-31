@@ -11,12 +11,14 @@ const CreateForm = ({tipos, setOpenModalCreate, openModalCreate}) => {
     const [datosFormulario, setDatosFormulario] = useState({
         gasto: '',
         tipo: '',
-        importe: ''
+        importe: '',
+        fecha: ''
     })
 
     const handleChange = (e) =>{
         //Setea los datos del formulario por name automaticamente
         setDatosFormulario({...datosFormulario, [e.target.name]: e.target.value})
+        console.log(datosFormulario)
     }
 
     const submitData = (e) => {
@@ -41,7 +43,8 @@ const CreateForm = ({tipos, setOpenModalCreate, openModalCreate}) => {
             setDatosFormulario({
                 gasto: '',
                 tipo: '',
-                importe: ''
+                importe: '',
+                fecha:''
             })
             setOpenModalCreate(false)
         })
@@ -67,6 +70,10 @@ const CreateForm = ({tipos, setOpenModalCreate, openModalCreate}) => {
                             <Form.Group className="mb-3">
                                 <Form.Label htmlFor="importe">Importe</Form.Label>
                                 <Form.Control type="number" placeholder="Importe" name="importe" id="importe" required onChange={handleChange} value={datosFormulario.importe}/>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label htmlFor="importe">Fecha</Form.Label>
+                                <Form.Control type="date" name="fecha" id="fecha" required onChange={handleChange} value={datosFormulario.fecha}/>
                             </Form.Group>
                         </fieldset>
                 </Modal.Body>

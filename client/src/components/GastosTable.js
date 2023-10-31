@@ -40,7 +40,7 @@ function GastosTable(){
             <SlPlus className="boton-fijo" onClick={() => {setOpenModalCreate(true)}}/>
             { (typeof dataFetch === 'undefined') 
                 ? (<p>Loading....</p>) 
-                : <Table bordered variant="success">
+                : <Table bordered variant="success" className="container">
                     <thead>
                         <tr>
                             <th colSpan={5}>Gastos del mes</th>
@@ -80,7 +80,7 @@ function GastosTable(){
                                     : tipoGasto.tipo.toLocaleLowerCase().includes(tipoSearch)
                             })
                             .map((gasto) => {
-                                let gastoFecha = new Date(gasto.createdAt)
+                                let gastoFecha = new Date(gasto.fecha)
                                 if((fecha.getUTCMonth() + 1).toString() === (gastoFecha.getUTCMonth() + 1).toString()){
                                     return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} /> )
                                 }  else {
@@ -89,7 +89,7 @@ function GastosTable(){
                             })
                         )}
                         <tr>
-                            <th colSpan={3}>Total</th>
+                            <th colSpan={3} className="fila-totales">Total</th>
                             <Importes arrayImportes={document.getElementsByClassName('importes__table')}/>
                         </tr>
                     </tbody>
