@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import cors from 'cors'
 import gastosRouter from './src/routes/gastosRouter.js'
+import userRouter from './src/routes/userRouter.js'
 import DBconnection from './src/database/databaseConnection.js'
 import config from './src/config/config.js'
 import bodyParser from 'body-parser'
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 DBconnection();
 //Routers
 app.use('/api/gastos', gastosRouter)
+app.use('/api/login', userRouter)
 
 
 app.get('/*', (req, res) => {
