@@ -18,7 +18,6 @@ function GastosTable(){
     const [search, setSearch] = useState('')
     const [tipoSearch, setTipoSearch] = useState('')
     const [fecha, setFecha] = useState(new Date())
-
     useEffect(() => {
         try{
             fetch('api/gastos/tipos')
@@ -40,60 +39,61 @@ function GastosTable(){
             <SlPlus className="boton-fijo" onClick={() => {setOpenModalCreate(true)}}/>
             { (typeof dataFetch === 'undefined') 
                 ? (<p>Loading....</p>) 
-                : <Table bordered variant="success" className="container">
-                    <thead>
-                        <tr>
-                            <th colSpan={5}>Gastos del mes</th>
-                            
-                        </tr>
-                        <tr>
-                            <th><Form.Control type="month" onChange={(e) => {
-                                if(e.target.value !== ''){
-                                    setFecha(new Date(e.target.value))
-                                } else {
-                                    setFecha(new Date())
-                                }
-                            }}/></th>
-                            <th><Form.Control onChange={(e) => setSearch(e.target.value)} placeholder="Buscar"/></th>
-                            {/* <th><Form.Control onChange={(e) => setTipoSearch(e.target.value)} placeholder="Tipo"/></th> */}
-                            <th>
-                                <Form.Select value={tipoSearch} onChange={handleChangeFilter}>
-                                    <option value="">Todos</option>
-                                    {(typeof tipos === 'undefined') 
-                                        ? <option>Cargando tipos</option> 
-                                        : (tipos.tiposGasto.map((tip => {return(<option key={tip._id} value={tip.tipo.toLocaleLowerCase()}>{tip.tipo}</option>)})))}
-                                </Form.Select>
-                            </th>
-                            <th colSpan={2}></th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        {(dataFetch
-                            .filter((gastos) => {
-                                return search.toLowerCase() === ''
-                                    ? gastos
-                                    : gastos.gasto.toLowerCase().includes(search)
-                            })
-                            .filter((tipoGasto) => {
-                                return tipoSearch.toLocaleLowerCase() === ''
-                                    ? tipoGasto
-                                    : tipoGasto.tipo.toLocaleLowerCase().includes(tipoSearch)
-                            })
-                            .map((gasto) => {
-                                let gastoFecha = new Date(gasto.fecha)
-                                if((fecha.getUTCMonth() + 1).toString() === (gastoFecha.getUTCMonth() + 1).toString()){
-                                    return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} /> )
-                                }  else {
-                                    return undefined
-                                }
-                            })
-                        )}
-                        <tr>
-                            <th colSpan={3} className="fila-totales">Total</th>
-                            <Importes arrayImportes={document.getElementsByClassName('importes__table')}/>
-                        </tr>
-                    </tbody>
-                </Table>
+                : <div className="table-responsive">
+                    <Table bordered variant="success">
+                        <thead>
+                            <tr>
+                                <th colSpan={5}>Gastos del mes</th>
+                            </tr>
+                            <tr>
+                                {(window.innerWidth < 550) || 
+                                    <th><Form.Control type="month" onChange={(e) => {
+                                        if(e.target.value !== ''){
+                                            setFecha(new Date(e.target.value))
+                                        } else {
+                                            setFecha(new Date())
+                                        }
+                                    }}/></th>}
+                                <th><Form.Control onChange={(e) => setSearch(e.target.value)} placeholder="Buscar"/></th>
+                                <th>
+                                    <Form.Select value={tipoSearch} onChange={handleChangeFilter}>
+                                        <option value="">Todos</option>
+                                        {(typeof tipos === 'undefined') 
+                                            ? <option>Cargando tipos</option> 
+                                            : (tipos.tiposGasto.map((tip => {return(<option key={tip._id} value={tip.tipo.toLocaleLowerCase()}>{tip.tipo}</option>)})))}
+                                    </Form.Select>
+                                </th>
+                                <th colSpan={2}></th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            {(dataFetch
+                                .filter((gastos) => {
+                                    return search.toLowerCase() === ''
+                                        ? gastos
+                                        : gastos.gasto.toLowerCase().includes(search)
+                                })
+                                .filter((tipoGasto) => {
+                                    return tipoSearch.toLocaleLowerCase() === ''
+                                        ? tipoGasto
+                                        : tipoGasto.tipo.toLocaleLowerCase().includes(tipoSearch)
+                                })
+                                .map((gasto) => {
+                                    let gastoFecha = new Date(gasto.fecha)
+                                    if((fecha.getUTCMonth() + 1).toString() === (gastoFecha.getUTCMonth() + 1).toString()){
+                                        return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} /> )
+                                    }  else {
+                                        return undefined
+                                    }
+                                })
+                            )}
+                            <tr className="fila_importtotal">
+                                <th colSpan={3} className="fila-totales">Total</th>
+                                <Importes arrayImportes={document.getElementsByClassName('importes__table')}/>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </div>
             } 
             {openModalModify && <ModalModifica setOpenModalModify={setOpenModalModify} gasto={gastoId} tipos={tipos} openModalModify={openModalModify}/>}
         </>

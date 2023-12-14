@@ -2,6 +2,7 @@ body{
   margin: 0;
   padding: 0;
   text-align: center;
+  font-size: 5px;
 }
 
 .main__gastos{
@@ -58,8 +59,8 @@ body{
 
 .boton-fijo {
   position: fixed;
-  bottom: 20px; 
-  right: 20px; 
+  bottom: 60px; 
+  right: 3px; 
   width: 75px; 
   height: 75px; 
   background-color: #408e2b;
@@ -76,4 +77,17 @@ body{
 
 .fila-totales{
   background-color: #408e2b !important;
+}
+
+.table_td_fecha{
+  width: 50px;
+}
+
+.fila_importtotal{
+  position: sticky;
+  bottom: 0;
+}
+
+.table-responsive{
+  overflow-x: 10;
 }

@@ -14,9 +14,15 @@ const GastosProvider = ({children}) => {
             fetch('api/gastos/gasto')
             .then(res => res.json())   
             .then(datos => {
-                let datosFilter = datos.gastos.filter((el) => el.muestra === true)
+                if(datos.message === 'Unauthorized'){
+                    setDataFetch(undefined)
+                } else {
+                    let datosFilter = datos.gastos.filter((el) => el.muestra === true)
+                datosFilter = datosFilter.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
                 setDataFetch(datosFilter)
                 setActualizadoTabla(false)
+                }
+                
             })
         } catch (error) {
             console.log(`Error del fetch: ${error}`)

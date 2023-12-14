@@ -16,13 +16,15 @@ function TableRow ({gasto, setGastoId, setOpenModalModify}) {
             break;
         case "Salida": gastoTipoClass = "bg-danger"
             break;
+        case "Importante": gastoTipoClass = "bg-primary"
+            break;
         default: gastoTipoClass = ""
             break;
     }
 
     return (
         <tr>
-            <td>{formateoFecha(gasto.fecha)}</td>
+            {(window.innerWidth < 550) || <td>{formateoFecha(gasto.fecha)}</td>}
             <td>{gasto.gasto}</td>
             <td className={`${gastoTipoClass} bg-gradient`}>{gasto.tipo}</td>
             <td className="importes__table">${Math.floor(gasto.importe)}</td>

@@ -17,6 +17,7 @@ function NavBar () {
                             <Nav>
                                 <Nav.Link href="/">Home</Nav.Link>
                                 <Nav.Link href="/gastos">Gastos</Nav.Link>
+                                <Nav.Link href="/logout">Logout</Nav.Link>
                             </Nav>
                         </Col>
                     </Row>

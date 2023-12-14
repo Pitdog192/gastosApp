@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import config from './config.js';
 
 function accessToken (payload) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         jwt.sign(
             payload,
             config.secret,

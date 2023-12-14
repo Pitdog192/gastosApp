@@ -2,19 +2,42 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 const LoginForm = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [datosFormulario, setDatosFormulario] = useState({
+        userName: '',
+        userPassword: '',
+    })
 
-    const handleSubmit = (event) => {
+    const [message, setMessage] = useState('')
+    const handleChange = (e) =>{
+        //Setea los datos del formulario por name automaticamente
+        setDatosFormulario({...datosFormulario, [e.target.name]: e.target.value})
+        setMessage('')
+    }
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Aquí puedes realizar acciones con el nombre de usuario y contraseña, como enviar los datos a un servidor o realizar validaciones.
-        console.log('Username:', username);
-        console.log('Password:', password);
-        // Puedes agregar lógica adicional aquí, como enviar la información a un servidor.
+        let myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+        try{
+            const responseFetch = await fetch('/api/login', {
+                method: 'POST',
+                headers: myHeaders,
+                mode: 'cors',
+                cache: 'default',
+                body: JSON.stringify(datosFormulario)
+            })
+            const result = await responseFetch.json()
+            setMessage(result.message)
+        }
+        catch(err){
+            console.log(err)
+        }
+
     }
     
     return (
         <>
+            <h2>{message}</h2>
             <h1 className='d-flex justify-content-center'>Login</h1>
             <Container className="container justify-content-center align-items-center col-lg-6" style={{ height: "100vh" }}>
                 <Row>
@@ -25,8 +48,8 @@ const LoginForm = () => {
                                 <Form.Control
                                     type="email"
                                     placeholder="Ingresa tu nombre de usuario"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
+                                    name="userName"
+                                    onChange={handleChange}
                                 />
                             </Form.Group>
                             <Form.Group controlId="formBasicPassword">
@@ -34,8 +57,8 @@ const LoginForm = () => {
                                 <Form.Control
                                     type="password"
                                     placeholder="Contraseña"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    name="userPassword"
+                                    onChange={handleChange}
                                 />
                             </Form.Group>
                             <Button variant="primary" type="submit"  className='mt-2'>
