@@ -15,9 +15,9 @@ function NavBar () {
                         </Col>
                         <Col>
                             <Nav>
-                                <Nav.Link href="/">Home</Nav.Link>
-                                <Nav.Link href="/gastos">Gastos</Nav.Link>
-                                <Nav.Link href="/logout">Logout</Nav.Link>
+                                <Nav.Link className='navbar_button_enlaces' href="/">Home</Nav.Link>
+                                <Nav.Link className='navbar_button_enlaces' href="/gastos">Gastos</Nav.Link>
+                                <Nav.Link className='navbar_button_enlaces' href="/api/logout">Logout</Nav.Link>
                             </Nav>
                         </Col>
                     </Row>

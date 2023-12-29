@@ -91,3 +91,7 @@ body{
 .table-responsive{
   overflow-x: 10;
 }
+
+.navbar_button_enlaces{
+  color: white !important;
+}

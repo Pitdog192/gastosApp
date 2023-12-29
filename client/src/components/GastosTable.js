@@ -8,7 +8,14 @@ import TableRow from "./tableRow";
 import Importes from "./Importes";
 import { SlPlus } from "react-icons/sl";
 
+
+// Para redireccionar
+import {useNavigate} from 'react-router-dom'
+
 function GastosTable(){
+
+    // Para redireccionar
+    const navigation = useNavigate()
 
     const { dataFetch } = useContext(GastosContext)
     const [openModalModify, setOpenModalModify] = useState(false)
@@ -18,6 +25,7 @@ function GastosTable(){
     const [search, setSearch] = useState('')
     const [tipoSearch, setTipoSearch] = useState('')
     const [fecha, setFecha] = useState(new Date())
+
     useEffect(() => {
         try{
             fetch('api/gastos/tipos')
@@ -41,9 +49,17 @@ function GastosTable(){
                 ? (<p>Loading....</p>) 
                 : <div className="table-responsive">
                     <Table bordered variant="success">
+                        <caption>Gastos del mes</caption>
                         <thead>
                             <tr>
                                 <th colSpan={5}>Gastos del mes</th>
+                            </tr>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Gasto</th>
+                                <th>Tipo</th>
+                                <th>Importe</th>
+                                <th>Acciones</th>
                             </tr>
                             <tr>
                                 {(window.innerWidth < 550) || 

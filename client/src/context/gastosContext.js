@@ -9,11 +9,20 @@ const GastosProvider = ({children}) => {
     const [dataFetch, setDataFetch] = useState()
     const [actualizadoTabla, setActualizadoTabla] = useState(true)
 
+
+    //function for auth user
+    const [isAuth, setIsAuth] = useState(null)
+    const authUser = async() => {
+        if(true) setIsAuth(true)
+        console.log(isAuth)
+    }
+
     useEffect(() =>{
         try {
             fetch('api/gastos/gasto')
             .then(res => res.json())   
             .then(datos => {
+                console.log(datos)
                 if(datos.message === 'Unauthorized'){
                     setDataFetch(undefined)
                 } else {
@@ -86,7 +95,8 @@ const GastosProvider = ({children}) => {
         setDataFetch,
         deleteGasto,
         setActualizadoTabla,
-        formateoFecha
+        formateoFecha,
+        authUser
     }
 
     return (
