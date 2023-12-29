@@ -9,14 +9,6 @@ const GastosProvider = ({children}) => {
     const [dataFetch, setDataFetch] = useState()
     const [actualizadoTabla, setActualizadoTabla] = useState(true)
 
-
-    //function for auth user
-    const [isAuth, setIsAuth] = useState(null)
-    const authUser = async() => {
-        if(true) setIsAuth(true)
-        console.log(isAuth)
-    }
-
     useEffect(() =>{
         try {
             fetch('api/gastos/gasto')
