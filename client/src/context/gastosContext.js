@@ -87,8 +87,7 @@ const GastosProvider = ({children}) => {
         setDataFetch,
         deleteGasto,
         setActualizadoTabla,
-        formateoFecha,
-        authUser
+        formateoFecha
     }
 
     return (
