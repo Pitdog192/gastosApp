@@ -7,15 +7,10 @@ import Form from 'react-bootstrap/Form'
 import TableRow from "./tableRow";
 import Importes from "./Importes";
 import { SlPlus } from "react-icons/sl";
-
-
 // Para redireccionar
 import {useNavigate} from 'react-router-dom'
 
 function GastosTable(){
-
-    // Para redireccionar
-    const navigation = useNavigate()
 
     const { dataFetch } = useContext(GastosContext)
     const [openModalModify, setOpenModalModify] = useState(false)
@@ -25,8 +20,10 @@ function GastosTable(){
     const [search, setSearch] = useState('')
     const [tipoSearch, setTipoSearch] = useState('')
     const [fecha, setFecha] = useState(new Date())
-
+    const navigation = useNavigate()
+    
     useEffect(() => {
+        (dataFetch === undefined) && navigation('/')
         try{
             fetch('api/gastos/tipos')
             .then(res => res.json())

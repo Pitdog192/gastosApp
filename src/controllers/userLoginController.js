@@ -36,7 +36,8 @@ async function userLogin(req, res){
 
         const token = await accessToken({id: userFound._id})
         res.cookie("token", token)
-        res.json({
+        return res.status(200).json({
+            access: true,
             id: userFound._id,
             user: userFound.userName
         })
@@ -45,10 +46,13 @@ async function userLogin(req, res){
     }
 }
 
-function userLogout(req, res){
-    res.cookie('token', '', {expires: new Date(0)})
-    return res.sendStatus(200)
-}
+function userLogout(req, res) {
+    res.cookie('token', '', {
+      expires: new Date(0),
+      httpOnly: true    // Si la cookie original se configuró como segura (solo se envía sobre HTTPS), asegúrate de que esta configuración coincida
+    });
+    return res.sendStatus(200);
+  }
 
 async function showUserProfile(req, res){
     const userFound = await UserModel.findById(req.user.id)

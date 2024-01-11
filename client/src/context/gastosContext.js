@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"
 
 const GastosContext = createContext();
 
@@ -14,7 +14,6 @@ const GastosProvider = ({children}) => {
             fetch('api/gastos/gasto')
             .then(res => res.json())   
             .then(datos => {
-                console.log(datos)
                 if(datos.message === 'Unauthorized'){
                     setDataFetch(undefined)
                 } else {
@@ -23,7 +22,6 @@ const GastosProvider = ({children}) => {
                 setDataFetch(datosFilter)
                 setActualizadoTabla(false)
                 }
-                
             })
         } catch (error) {
             console.log(`Error del fetch: ${error}`)

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 const LoginForm = () => {
@@ -6,7 +7,7 @@ const LoginForm = () => {
         userName: '',
         userPassword: '',
     })
-
+    const navigation = useNavigate()
     const [message, setMessage] = useState('')
     const handleChange = (e) =>{
         //Setea los datos del formulario por name automaticamente
@@ -28,11 +29,13 @@ const LoginForm = () => {
             })
             const result = await responseFetch.json()
             setMessage(result.message)
+            if(result.access){
+                navigation('/gastos')
+            } 
         }
         catch(err){
-            console.log(err)
+            console.log(err) //------------------//
         }
-
     }
     
     return (
@@ -61,7 +64,7 @@ const LoginForm = () => {
                                     onChange={handleChange}
                                 />
                             </Form.Group>
-                            <Button variant="primary" type="submit"  className='mt-2'>
+                            <Button variant="primary" type="submit" className='mt-2'>
                                 Iniciar Sesión
                             </Button>
                         </Form>
