@@ -1,33 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import Swal from "sweetalert2"
 
 const GastosContext = createContext();
 
 const GastosProvider = ({children}) => {
-
-    //data fectched from api/get
-    const [dataFetch, setDataFetch] = useState()
-    const [actualizadoTabla, setActualizadoTabla] = useState(true)
-
-    useEffect(() =>{
-        try {
-            fetch('api/gastos/gasto')
-            .then(res => res.json())   
-            .then(datos => {
-                if(datos.message === 'Unauthorized'){
-                    setDataFetch(undefined)
-                } else {
-                    let datosFilter = datos.gastos.filter((el) => el.muestra === true)
-                datosFilter = datosFilter.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-                setDataFetch(datosFilter)
-                setActualizadoTabla(false)
-                }
-            })
-        } catch (error) {
-            console.log(`Error del fetch: ${error}`)
-        }
-    }, [actualizadoTabla])
-
+    const [actualizadoTabla, setActualizadoTabla] = useState(true)    
     const deleteGasto = (id) => {
         Swal.fire({
             title: '¿Estás seguro de eliminar este gasto?',
@@ -81,10 +58,9 @@ const GastosProvider = ({children}) => {
     }
 
     const data = {
-        dataFetch,
-        setDataFetch,
         deleteGasto,
         setActualizadoTabla,
+        actualizadoTabla,
         formateoFecha
     }
 

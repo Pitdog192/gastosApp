@@ -11,10 +11,10 @@ import { SlPlus } from "react-icons/sl";
 import {useNavigate} from 'react-router-dom'
 
 function GastosTable(){
-
-    const { dataFetch } = useContext(GastosContext)
+    const {actualizadoTabla, setActualizadoTabla} = useContext(GastosContext)
     const [openModalModify, setOpenModalModify] = useState(false)
     const [openModalCreate, setOpenModalCreate] = useState(false)
+    const [dataFetch, setDataFetch] = useState() //ESTADO PARA LOS PRODUCTOS
     const [gastoId, setGastoId] = useState()
     const [tipos, setTipos] = useState()
     const [search, setSearch] = useState('')
@@ -23,7 +23,6 @@ function GastosTable(){
     const navigation = useNavigate()
     
     useEffect(() => {
-        (dataFetch === undefined) && navigation('/')
         try{
             fetch('api/gastos/tipos')
             .then(res => res.json())
@@ -33,7 +32,24 @@ function GastosTable(){
         } catch(err){
             console.log(err)
         }
-    }, [])  
+        try {
+            fetch('api/gastos/gasto')
+            .then(res => res.json())   
+            .then(datos => {
+                if(datos.message === 'Unauthorized'){
+                    setDataFetch(undefined)
+                    navigation('/')
+                } else {
+                    let datosFilter = datos.gastos.filter((el) => el.muestra === true)
+                    datosFilter = datosFilter.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+                    setDataFetch(datosFilter)
+                    setActualizadoTabla(false)
+                }
+            })
+        } catch (error) {
+            console.log(`Error del fetch: ${error}`)
+        }
+    }, [actualizadoTabla, setActualizadoTabla, navigation])  
 
     const handleChangeFilter = event => {
         setTipoSearch(event.target.value);
@@ -46,7 +62,6 @@ function GastosTable(){
                 ? (<p>Loading....</p>) 
                 : <div className="table-responsive">
                     <Table bordered variant="success">
-                        <caption>Gastos del mes</caption>
                         <thead>
                             <tr>
                                 <th colSpan={5}>Gastos del mes</th>

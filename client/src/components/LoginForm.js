@@ -29,9 +29,13 @@ const LoginForm = () => {
             })
             const result = await responseFetch.json()
             setMessage(result.message)
-            if(result.access){
-                navigation('/gastos')
-            } 
+            console.log(result)
+            setTimeout(() => {
+                if(result.access){
+                    navigation('/gastos')
+                }
+            }, 500)
+             
         }
         catch(err){
             console.log(err) //------------------//
@@ -49,7 +53,7 @@ const LoginForm = () => {
                             <Form.Group controlId="formBasicUsername">
                                 <Form.Label>Usuario</Form.Label>
                                 <Form.Control
-                                    type="email"
+                                    type="text"
                                     placeholder="Ingresa tu nombre de usuario"
                                     name="userName"
                                     onChange={handleChange}
