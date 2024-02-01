@@ -51,7 +51,7 @@ const CreateForm = ({tipos, setOpenModalCreate, openModalCreate}) => {
     }
     return(
         <>
-            <Modal show={openModalCreate}>
+            <Modal show={openModalCreate} onHide={() => {setOpenModalCreate(false)}}>
                 <Form onSubmit={submitData} className="form__carga">
                 <Modal.Header>
                     <Modal.Title>Cargar</Modal.Title>

@@ -46,7 +46,7 @@ const ModalModifica = ({setOpenModalModify, gasto, tipos, openModalModify}) => {
     const fechaFormateada = `${partes[2]}-${partes[1]}-${partes[0]}`;
     return(
         <>
-            <Modal show={openModalModify}>
+            <Modal show={openModalModify} onHide={() => setOpenModalModify(false)}>
                 <Modal.Header>
                     <Modal.Title>Modificación</Modal.Title>
                     <Button variant="danger" onClick={() => setOpenModalModify(false)}>X</Button>

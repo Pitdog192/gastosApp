@@ -3,6 +3,7 @@ import { useContext, useState, useEffect} from "react"
 import ModalModifica from "./ModalModifica.js"
 import CreateForm from "./CreateForm.js"
 import Table from 'react-bootstrap/Table';
+import Spinner from 'react-bootstrap/Spinner';
 import Form from 'react-bootstrap/Form'
 import TableRow from "./tableRow";
 import Importes from "./Importes";
@@ -11,44 +12,50 @@ import { SlPlus } from "react-icons/sl";
 import {useNavigate} from 'react-router-dom'
 
 function GastosTable(){
+
     const {actualizadoTabla, setActualizadoTabla} = useContext(GastosContext)
     const [openModalModify, setOpenModalModify] = useState(false)
     const [openModalCreate, setOpenModalCreate] = useState(false)
-    const [dataFetch, setDataFetch] = useState() //ESTADO PARA LOS PRODUCTOS
+    const [dataFetch, setDataFetch] = useState([]) //ESTADO PARA LOS PRODUCTOS
     const [gastoId, setGastoId] = useState()
-    const [tipos, setTipos] = useState()
+    const [tipos, setTipos] = useState({})
     const [search, setSearch] = useState('')
     const [tipoSearch, setTipoSearch] = useState('')
     const [fecha, setFecha] = useState(new Date())
     const navigation = useNavigate()
+    const arrayMesesTitulo = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio","Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
     
     useEffect(() => {
-        try{
-            fetch('api/gastos/tipos')
-            .then(res => res.json())
-            .then((resp) => {
-                setTipos(resp)
-            })
-        } catch(err){
-            console.log(err)
-        }
-        try {
-            fetch('api/gastos/gasto')
-            .then(res => res.json())   
-            .then(datos => {
-                if(datos.message === 'Unauthorized'){
-                    setDataFetch(undefined)
-                    navigation('/')
-                } else {
-                    let datosFilter = datos.gastos.filter((el) => el.muestra === true)
-                    datosFilter = datosFilter.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-                    setDataFetch(datosFilter)
-                    setActualizadoTabla(false)
-                }
-            })
-        } catch (error) {
-            console.log(`Error del fetch: ${error}`)
-        }
+        const fetchTipos = async () => {
+            try {
+              const response = await fetch('api/gastos/tipos');
+              const data = await response.json();
+              setTipos(data);
+            } catch (error) {
+              console.error('Error fetching tipos:', error);
+            }
+          };
+      
+          const fetchGastos = async () => {
+            try {
+              const response = await fetch('api/gastos/gasto');
+              const data = await response.json();
+              if (data.message === 'Unauthorized') {
+                setDataFetch([]);
+                navigation('/');
+              } else {
+                const datosFilter = data.gastos.filter((el) => el.muestra === true);
+                datosFilter.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+                setDataFetch(datosFilter);
+                setActualizadoTabla(false);
+              }
+            } catch (error) {
+              console.error('Error fetching gastos:', error);
+            }
+          };
+      
+          fetchTipos();
+          fetchGastos();
     }, [actualizadoTabla, setActualizadoTabla, navigation])  
 
     const handleChangeFilter = event => {
@@ -59,12 +66,12 @@ function GastosTable(){
             {openModalCreate && <CreateForm tipos={tipos} setOpenModalCreate={setOpenModalCreate} openModalCreate={openModalCreate}/>}
             <SlPlus className="boton-fijo" onClick={() => {setOpenModalCreate(true)}}/>
             { (typeof dataFetch === 'undefined') 
-                ? (<p>Loading....</p>) 
+                ? <Spinner animation="border" variant="success" className="mt-5" size="lg"/>
                 : <div className="table-responsive">
                     <Table bordered variant="success">
                         <thead>
                             <tr>
-                                <th colSpan={5}>Gastos del mes</th>
+                                <th colSpan={5}><b style={{ color: 'rgb(0, 195, 255)', fontSize: '25px' }}>{arrayMesesTitulo[fecha.getUTCMonth()]}</b></th>
                             </tr>
                             <tr>
                                 <th>Fecha</th>
@@ -88,7 +95,7 @@ function GastosTable(){
                                         <option value="">Todos</option>
                                         {(typeof tipos === 'undefined') 
                                             ? <option>Cargando tipos</option> 
-                                            : (tipos.tiposGasto.map((tip => {return(<option key={tip._id} value={tip.tipo.toLocaleLowerCase()}>{tip.tipo}</option>)})))}
+                                            : ( Array.isArray(tipos.tiposGasto) && tipos.tiposGasto.map((tip => {return(<option key={tip._id} value={tip.tipo.toLocaleLowerCase()}>{tip.tipo}</option>)})))}
                                     </Form.Select>
                                 </th>
                                 <th colSpan={2}></th>
@@ -108,7 +115,8 @@ function GastosTable(){
                                 })
                                 .map((gasto) => {
                                     let gastoFecha = new Date(gasto.fecha)
-                                    if((fecha.getUTCMonth() + 1).toString() === (gastoFecha.getUTCMonth() + 1).toString()){
+                                    if( ((fecha.getUTCMonth() + 1).toString() === (gastoFecha.getUTCMonth() + 1).toString()) && 
+                                        (fecha.getUTCFullYear().toString() === gastoFecha.getUTCFullYear().toString())) {
                                         return( <TableRow key={gasto._id} gasto={gasto} setGastoId={setGastoId} setOpenModalModify={setOpenModalModify} /> )
                                     }  else {
                                         return undefined
