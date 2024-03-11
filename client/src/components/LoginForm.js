@@ -9,9 +9,9 @@ const LoginForm = () => {
     })
     const navigation = useNavigate()
     const [message, setMessage] = useState('')
-    const handleChange = (e) =>{
+    const handleChange = (e) => {
         //Setea los datos del formulario por name automaticamente
-        setDatosFormulario({...datosFormulario, [e.target.name]: e.target.value})
+        setDatosFormulario({ ...datosFormulario, [e.target.name]: e.target.value })
         setMessage('')
     }
 
@@ -19,7 +19,7 @@ const LoginForm = () => {
         event.preventDefault();
         let myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
-        try{
+        try {
             const responseFetch = await fetch('/api/login', {
                 method: 'POST',
                 headers: myHeaders,
@@ -31,17 +31,16 @@ const LoginForm = () => {
             setMessage(result.message)
             console.log(result)
             setTimeout(() => {
-                if(result.access){
+                if (result.access) {
                     navigation('/gastos')
                 }
             }, 500)
-             
         }
-        catch(err){
+        catch (err) {
             console.log(err) //------------------//
         }
     }
-    
+
     return (
         <>
             <h2>{message}</h2>
